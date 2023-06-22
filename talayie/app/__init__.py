@@ -15,7 +15,7 @@ def create_app(config_name):
     app.register_blueprint(user_blueprint, url_prefix='/user')
 
     from .orders import order as order_blueprint
-    app.register_blueprint(user_blueprint, url_prefix='/order')
+    app.register_blueprint(order_blueprint, url_prefix='/order')
 
     
     return app
