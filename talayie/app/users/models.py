@@ -22,12 +22,12 @@ class Personnel(db.Model):
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     date_of_birth = db.Column(db.String(128))
-    role = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    organization = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    organization_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
 
 
 class Client(db.Model):
     __tablename__ = 'clients'
     id = db.Column(db.Integer, primary_key=True)
-    personnel = db.Column(db.Integer, db.ForeignKey('personnels.id'))
+    personnel_id = db.Column(db.Integer, db.ForeignKey('personnels.id'))
     orders = db.relationship('Order', backref='client', lazy='dynamic')

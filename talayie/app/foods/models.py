@@ -15,6 +15,6 @@ class Food(db.Model):
     name = db.Column(db.String(128))
     price = db.Column(db.Integer)
     is_available = db.Column(db.Boolean, default=True)
-    category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     order_items = db.relationship("OrderItem", backref="food", lazy='dynamic')
 

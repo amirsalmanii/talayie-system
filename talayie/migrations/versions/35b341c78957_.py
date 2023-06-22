@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4767c28b96cb
+Revision ID: 35b341c78957
 Revises: 
-Create Date: 2023-06-22 18:21:21.140343
+Create Date: 2023-06-22 18:48:37.009433
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4767c28b96cb'
+revision = '35b341c78957'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,8 +40,8 @@ def upgrade():
     sa.Column('name', sa.String(length=128), nullable=True),
     sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('is_available', sa.Boolean(), nullable=True),
-    sa.Column('category', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['category'], ['categories.id'], ),
+    sa.Column('category_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('personnels',
@@ -49,16 +49,16 @@ def upgrade():
     sa.Column('first_name', sa.String(length=64), nullable=True),
     sa.Column('last_name', sa.String(length=64), nullable=True),
     sa.Column('date_of_birth', sa.String(length=128), nullable=True),
-    sa.Column('role', sa.Integer(), nullable=True),
-    sa.Column('organization', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['organization'], ['organizations.id'], ),
-    sa.ForeignKeyConstraint(['role'], ['roles.id'], ),
+    sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('organization_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['organization_id'], ['organizations.id'], ),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('clients',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('personnel', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['personnel'], ['personnels.id'], ),
+    sa.Column('personnel_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['personnel_id'], ['personnels.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('orders',
@@ -68,18 +68,18 @@ def upgrade():
     sa.Column('create_date', sa.DateTime(), nullable=True),
     sa.Column('total_price', sa.Integer(), nullable=True),
     sa.Column('table_number', sa.Integer(), nullable=True),
-    sa.Column('client', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['client'], ['clients.id'], ),
+    sa.Column('client_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('orderitems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('food_id', sa.Integer(), nullable=True),
-    sa.Column('order', sa.Integer(), nullable=True),
+    sa.Column('order_id', sa.Integer(), nullable=True),
     sa.Column('count', sa.Integer(), nullable=True),
     sa.Column('price', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['food_id'], ['foods.id'], name='fk_orderitem_food_id'),
-    sa.ForeignKeyConstraint(['order'], ['orders.id'], ),
+    sa.ForeignKeyConstraint(['food_id'], ['foods.id'], ),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
