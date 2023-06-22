@@ -30,3 +30,4 @@ class Client(db.Model):
     __tablename__ = 'clients'
     id = db.Column(db.Integer, primary_key=True)
     personnel = db.Column(db.Integer, db.ForeignKey('personnels.id'))
+    orders = db.relationship('Order', backref='client', lazy='dynamic')
