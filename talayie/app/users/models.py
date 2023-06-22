@@ -27,6 +27,6 @@ class Personnel(db.Model):
 
 
 class Client(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'clients'
     id = db.Column(db.Integer, primary_key=True)
     personnel = db.Column(db.Integer, db.ForeignKey('personnels.id'))
