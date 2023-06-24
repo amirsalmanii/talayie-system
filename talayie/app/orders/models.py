@@ -1,5 +1,6 @@
 import datetime
 from app import db
+from app.foods.models import Food
 
 
 class Order(db.Model):
@@ -13,6 +14,18 @@ class Order(db.Model):
     order_items = db.relationship('OrderItem', backref='order', lazy='dynamic')
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
 
+    def calculate_total_price(self):
+        all_items = self.order_items.all()
+        total_price = 0
+        for item in all_items:
+            total_price += item.price
+
+        self.total_price = total_price
+    
+    def pay_order(self):
+        self.is_paid = True
+        self.paid_date = datetime.datetime.utcnow()
+
 
 class OrderItem(db.Model):
     __tablename__ = 'orderitems'
@@ -21,3 +34,8 @@ class OrderItem(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     count = db.Column(db.Integer)
     price = db.Column(db.Integer) #TODO function for calculate total price of this order items
+
+    def calculate_total_price(self):
+        food_obj = Food.query.get(self.food_id)
+        if food_obj:
+            self.price = food_obj.price * self.count
