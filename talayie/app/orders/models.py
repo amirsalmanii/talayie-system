@@ -25,6 +25,8 @@ class Order(db.Model):
     def pay_order(self):
         self.is_paid = True
         self.paid_date = datetime.datetime.utcnow()
+        db.session.add(self)
+        db.session.commit()
 
 
 class OrderItem(db.Model):
