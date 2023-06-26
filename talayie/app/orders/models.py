@@ -34,6 +34,7 @@ class OrderItem(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     count = db.Column(db.Integer)
     price = db.Column(db.Integer) #TODO function for calculate total price of this order items
+    foods = db.relationship("Food", backref="orderitems")
 
     def calculate_total_price(self):
         food_obj = Food.query.get(self.food_id)
